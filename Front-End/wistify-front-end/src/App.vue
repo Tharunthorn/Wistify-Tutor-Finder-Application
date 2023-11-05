@@ -1,9 +1,11 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
   <div>
+    <NavBar />
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
