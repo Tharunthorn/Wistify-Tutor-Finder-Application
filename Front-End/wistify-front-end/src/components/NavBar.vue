@@ -21,7 +21,7 @@ export default {
 
 <style scoped>
 /* Import Montserrat font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* Adding styles to change the size of the navbar and logo */
 .navbar {
@@ -55,11 +55,11 @@ export default {
 .navbar-item {
   color: #fff;
   text-decoration: none;
-  margin: 0 1.0667rem; /* Converted to rem - Adjusted margin */
+  margin: 0 1rem; /* Converted to rem - Adjusted margin */
   font-family: 'Montserrat', sans-serif; /* Applying Montserrat font */
-  font-style: normal;
   line-height: normal;
   letter-spacing: -0.02rem; /* Converted to rem - Adjusted letter-spacing */
+  font-weight: 500;
 }
 
 .navbar-item-join {
@@ -67,11 +67,12 @@ export default {
   border: 0.1rem solid #B8E830; /* Set border properties */
   border-radius: 0.3rem; /* Apply border-radius */
   padding: 0.6667rem 1.3333rem; /* 10px top and bottom, 20px left and right in rem */
-  margin: 0 1.0667rem; /* Converted to rem - Adjusted margin */
+  font-family: 'Montserrat', sans-serif; /* Applying Montserrat font */
+  margin: 0.1rem; /* Converted to rem - Adjusted margin */
   text-decoration: none;
-  font-style: normal;
   line-height: normal;
   letter-spacing: -0.02rem; /* Converted to rem - Adjusted letter-spacing */
+  font-weight: 500;
 }
 
 .navbar-item-join:hover {
