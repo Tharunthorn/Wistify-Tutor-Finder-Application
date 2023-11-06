@@ -26,7 +26,7 @@ Check out all of our project documents [here!](../../wiki/Home)
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)
 - [Development Plan](../../wiki/Development-Plan)
-- [Task Board]([../../wiki/Task-Board](https://github.com/users/Tharunthorn/projects/6)https://github.com/users/Tharunthorn/projects/6)
+- [Task Board](https://github.com/users/Tharunthorn/projects/6)https://github.com/users/Tharunthorn/projects/6)
 - [Retrospectives](../../wiki/Retrospectives)
 
 
