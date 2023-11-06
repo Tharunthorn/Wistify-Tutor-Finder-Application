@@ -21,7 +21,7 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Project Documents
 
-Check out project documents [here](../../wiki/Home).
+Check out all of our project documents [here!](../../wiki/Home)
 
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)
