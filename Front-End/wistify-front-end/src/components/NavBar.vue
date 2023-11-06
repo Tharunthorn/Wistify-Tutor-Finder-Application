@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar">
-      <img src="public/WISTIFY.svg" alt="WISTIFY Logo" class="navbar-logo" />
+      <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
       <div class="navbar-menu">
         <a class="navbar-item" href="#">Explore</a>
         <a class="navbar-item" href="#">Become Tutor</a>
@@ -9,7 +9,6 @@
         <a class="navbar-item-join" href="#">Join</a>
       </div>
     </nav>
-    <!-- Other content of your application -->
   </div>
 </template>
 
@@ -53,9 +52,9 @@ export default {
 }
 
 .navbar-item {
-  color: #fff;
+  color: #FCFBFC;
   text-decoration: none;
-  margin: 0 1rem; /* Converted to rem - Adjusted margin */
+  margin: 0.1rem; /* Converted to rem - Adjusted margin */
   font-family: 'Montserrat', sans-serif; /* Applying Montserrat font */
   line-height: normal;
   letter-spacing: -0.02rem; /* Converted to rem - Adjusted letter-spacing */
@@ -76,7 +75,7 @@ export default {
 }
 
 .navbar-item-join:hover {
-  color: white;
+  color: #FCFBFC;
   background-color: #B8E830; /* Change the background color on hover */
 }
 
@@ -90,6 +89,7 @@ export default {
 
 /* Add media query to adjust for smaller screens, e.g., phones */
 @media (max-width: 1000px) {
+
   .navbar {
     height: 5rem; /* Converted to rem - Adjust height for smaller screens */
   }
