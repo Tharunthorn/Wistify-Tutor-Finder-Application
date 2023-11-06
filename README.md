@@ -26,5 +26,7 @@ Check out all of our project documents [here!](../../wiki/Home)
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)
 - [Development Plan](../../wiki/Development-Plan)
+- [Task Board](../../wiki/Task-Board)
+- [Retrospectives](../../wiki/Retrospectives)
 
 
