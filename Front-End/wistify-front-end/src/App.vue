@@ -1,15 +1,12 @@
-<script setup>
-import NavBar from "./components/NavBar.vue";
-import HeroSection from "./components/HeroSection.vue";
-import ContentSection from "./components/ContentSection.vue";
-</script>
-
 <template>
-  <NavBar />
-  <HeroSection />
-  <ContentSection />
-
+  <div id="app">
+    <router-link to="/">LandingPage</router-link>
+    <router-view></router-view>
+  </div>
 </template>
 
-<style scoped>
-</style>
+<script>
+export default {
+  // Your logic for the App component
+};
+</script>
