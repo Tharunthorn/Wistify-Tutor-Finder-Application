@@ -2,7 +2,17 @@
   <div>
     <Navbar />
     <div class="page-background"></div>
-    <div class="square-layout">
+    <div class="info-layout">
+      <h2>Jimmy Rogers</h2>
+        <p class="description-box">
+          Email: jimmy.rogers@gmail.com
+          <br>
+          <br>
+          Tel: 123-456-7890
+        </p>
+      <div class="status-box">
+        <h3>Tutor</h3>
+      </div>
       <div class="container">
         <div class="avatar-upload">
           <div class="avatar-edit">
@@ -30,7 +40,7 @@ export default {
   },
   data() {
     return {
-      imageSrc: '/public/Default_pfp.svg',
+      imageSrc: '/public/jrogers.jpeg',
     };
   },
   methods: {
@@ -67,7 +77,7 @@ export default {
   flex-shrink: 0;
 }
 
-.square-layout {
+.info-layout {
   position: fixed;
   top: 15%;
   left: 3.5%;
@@ -77,7 +87,6 @@ export default {
   border-radius: 40px;
   background: #0D0C0C;
   align-items: center;
-  /* Add additional styling for the square layout as needed */
 }
 
 .footer {
@@ -176,5 +185,43 @@ h1 small {
   background-position: center;
 }
 
-/* Add more styles as needed for different profile sections */
+h2 {
+  font-size: 80px;
+  font-family: 'Montserrat', sans-serif;
+  position: fixed;
+  color: #FFFFFF;
+  margin-left: 500px;
+  margin-top: 50px;
+}
+
+.description-box {
+  position: fixed;
+  font-size: 30px;
+  font-family: 'Montserrat', sans-serif;
+  color: #FFFFFF;
+  margin-left: 500px;
+  margin-top: 160px;
+}
+
+.status-box {
+  position: fixed;
+  top: 34%;
+  left: 79%;
+  width: 190px;
+  height: 60px;
+  border-radius: 15px;
+  background: #B8E830;
+  align-items: center;
+}
+
+h3 {
+  font-size: 35px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+  position: fixed;
+  color: #0D0C0C;
+  margin-left: 45px;
+  margin-top: 8px;
+}
+
 </style>
