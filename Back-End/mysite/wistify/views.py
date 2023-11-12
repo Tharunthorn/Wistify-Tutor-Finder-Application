@@ -1,29 +1,63 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from rest_framework.parsers import JSONParser
-# from rest_framework.exceptions import APIException
-
+from rest_framework.exceptions import APIException
 from .models import Learner
-from .serializers import UserSerializer, LearnerSerializer
-from .models import User, Learner
+# from .serializers import UserSerializer 
+from .serializers import LearnerSerializer
+from .serializers import LogInSerializer
+from .serializers import SignUpSerializer
+from .authentication import create_access_token
+from .authentication import create_refresh_token
 
-@api_view(['GET'])
-def getLearner(request):
-    learner = Learner.objects.all()
-    serializer = LearnerSerializer(learner, many=True)
-    return Response(serializer.data)
+class GetLearner(APIView):
+    def get(self, request):
+        learner = Learner.objects.all()
+        serializer = LearnerSerializer(learner, many=True)
+        
+        return Response(serializer.data)
+
 
 class LearnerSignUp(APIView):
     def post(self, request):
-        user_serializer = UserSerializer(data=request.data)
+        user_serializer = SignUpSerializer(data=request.data)
         user_serializer.is_valid(raise_exception=True)
+        user_serializer.validate(request.data)
+        
         user = user_serializer.save()
+        
         learner = Learner.objects.create(user=user)
-        learner_serializer = LearnerSerializer(data={"id": learner.id, "user": request.data})
-        learner_serializer.is_valid(raise_exception=True)
-        learner_serializer.save()
-        return Response(learner_serializer.data)
+        learner_seriailizer = LearnerSerializer(learner)
+        
+        return Response(learner_seriailizer.data)
+
+    
+class LearnerLogIn(APIView):
+    def post(self, request): 
+        login_serializer = LogInSerializer(data=request.data)
+        login_serializer.is_valid(raise_exception=True)
+        login_serializer.validate(request.data)
+        
+        try:
+            email = request.data['email']
+            password = request.data['password']
+        
+            learner = Learner.objects.get(user__email=email, 
+                                          user__password=password)
+            
+        except Learner.DoesNotExist:
+            raise APIException('Incorrect Email or Password')
+            
+        access_token = create_access_token(learner.id)
+        refresh_token = create_refresh_token(learner.id)
+        
+        response = Response()
+        response.set_cookie(key='refreshToken', value=refresh_token, httponly=True)
+        response.data = {
+            'token': access_token
+        }
+        
+        return response
+    
     
 # {
 #  "email":"a.a@gmail.com",
