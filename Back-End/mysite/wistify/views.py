@@ -2,12 +2,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import APIException
 from .models import Learner
-# from .serializers import UserSerializer 
 from .serializers import LearnerSerializer
 from .serializers import LogInSerializer
 from .serializers import SignUpSerializer
 from .authentication import create_access_token
 from .authentication import create_refresh_token
+from django.contrib.auth.hashers import check_password
+
 
 class GetLearner(APIView):
     def get(self, request):
@@ -36,13 +37,17 @@ class LearnerLogIn(APIView):
         login_serializer = LogInSerializer(data=request.data)
         login_serializer.is_valid(raise_exception=True)
         login_serializer.validate(request.data)
-        
+                
         try:
             email = request.data['email']
             password = request.data['password']
-        
-            learner = Learner.objects.get(user__email=email, 
-                                          user__password=password)
+            
+            learner = Learner.objects.get(user__email=email)  
+            
+            correct_password = check_password(password, learner.user.password)
+            
+            if not correct_password:
+                raise Learner.DoesNotExist
             
         except Learner.DoesNotExist:
             raise APIException('Incorrect Email or Password')
@@ -59,9 +64,3 @@ class LearnerLogIn(APIView):
         return response
     
     
-# {
-#  "email":"a.a@gmail.com",
-# "first_name":"Bill",
-# "last_name":"Gates",
-# "password":"microsoft"
-# }
