@@ -102,7 +102,7 @@ export default {
   height: 2.5rem;
   background-color: #FFF;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.60);
-  border-radius: 0.469rem;
+  border-radius: 0.469rem 0  0 0.469rem ;
   padding: 0.5rem 1rem;
   border: none;
   font-size: 1rem;
@@ -115,13 +115,13 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   width: 4.6875rem; /* Converted width to rem */
-  height: 3.5rem;
+  height: 2.5rem;
   background-color: #B8E830;
   color: #FFF;
   border: none;
   border-radius: 0 0.469rem 0.469rem 0;
   font-size: 1rem;
-  margin-left: -4.69rem;
+
   padding: 0.5rem 1rem;
 }
 
