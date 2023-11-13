@@ -12,22 +12,22 @@
     </div>
 
     <div v-if="filteredItems.length > 0" class="item-grid">
-      <div v-for="item in filteredItems" :key="item.id" class="item-card">
+      <router-link v-for="item in filteredItems" :key="item.id" :to="'/Tutor/' + item.id" class="item-card">
         <!-- Display item information here -->
         <div class="item-image" :style="{ backgroundImage: 'url(' + item.banner + ')' }"></div>
         <div class="item-details">
           <div class="item-name font-semibold">{{ item.name }}</div>
           <div class="item-subjects text-gray-500">
-            <span v-for="(subject, index) in item.subjects" :key="index">
-              {{ subject }}
-              <span v-if="index < item.subjects.length - 1">, </span>
-            </span>
+              <span v-for="(subject, index) in item.subjects" :key="index">
+                {{ subject }}
+                <span v-if="index < item.subjects.length - 1">, </span>
+              </span>
           </div>
           <div class="item-rating">Rating: {{ item.rating }}</div>
           <div class="item-description">{{ item.description }}</div>
         </div>
         <!-- Add more item details as needed -->
-      </div>
+      </router-link>
     </div>
 
     <div v-if="filteredItems.length === 0" class="no-items-found">
