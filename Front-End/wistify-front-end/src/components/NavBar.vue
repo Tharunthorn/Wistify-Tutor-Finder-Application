@@ -1,9 +1,11 @@
 <template>
   <div>
     <nav class="navbar">
-      <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
+      <a href="/">
+        <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
+      </a>
       <div class="navbar-menu">
-        <a class="navbar-item" href="/">Explore</a>
+        <a class="navbar-item" href="/Explore">Explore</a>
         <a class="navbar-item" href="/SignUpTutor">Become Tutor</a>
         <a class="navbar-item" href="/SignIn">Sign In</a>
         <a class="navbar-item-join" href="/SignUp">Join</a>
