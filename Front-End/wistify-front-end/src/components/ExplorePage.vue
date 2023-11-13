@@ -34,6 +34,10 @@
       No items found.
     </div>
   </div>
+
+  <div class="footer">
+    <p class="footer-text">© 2023 Wistify. All rights reserved.</p>
+  </div>
 </template>
 
 <script>
@@ -436,4 +440,20 @@ body {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.4);
 }
+
+/* Footer styles */
+.footer {
+  margin-bottom: 2rem;
+  width: 100%;
+  height: 30px;
+}
+
+.footer-text {
+  margin-top: 4rem;
+  color: #000000; /* Text color */
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem; /* Adjust the font size */
+}
+
 </style>
