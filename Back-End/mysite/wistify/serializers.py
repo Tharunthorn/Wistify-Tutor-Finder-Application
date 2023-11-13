@@ -32,6 +32,11 @@ class SignUpSerializer(serializers.ModelSerializer):
     def validate(self, data):
         right_format = set(data.keys()) == set(self.Meta.fields)
         
+        data['first_name'] = data['first_name'].strip().title()
+        data['last_name'] = data['last_name'].strip().title()
+        
+        if not right_format:
+            raise ValidationError("Wrong JSON data format")
         if not set(data['first_name']).issubset(LETTERS):
             raise ValidationError("First Name must be contained only English letters")
         if not len(data['first_name']) >= 2:
@@ -42,16 +47,11 @@ class SignUpSerializer(serializers.ModelSerializer):
             raise ValidationError("Last Name must be contained in the length of 2-20 English letters")
         if not len(data['password']) >= 7:
             raise ValidationError("Password must be contained in the length of 7-20 characters")
-        if not right_format:
-            raise ValidationError("Wrong JSON data format")
-
+        
         return data 
     
     def create(self, data):
         password = make_password(data['password'])
-        
-        data['first_name'] = data['first_name'].title()
-        data['last_name'] = data['last_name'].title()
         data['password'] = password
         
         instance = self.Meta.model(**data)
