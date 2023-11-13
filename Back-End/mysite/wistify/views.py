@@ -10,8 +10,6 @@ from django.contrib.auth.hashers import check_password
 
 
 class GetLearner(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request):
         learners = Learner.objects.all()
         serializer = LearnerSerializer(learners, many=True)
@@ -19,9 +17,7 @@ class GetLearner(APIView):
 
 
 class GetTutor(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
+     def get(self, request):
         tutors = Tutor.objects.all()
         serializer = TutorSerializer(tutors, many=True)
         return Response(serializer.data)
