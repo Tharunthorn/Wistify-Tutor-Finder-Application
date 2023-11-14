@@ -8,7 +8,8 @@
           Discover Your <span class="highlight-font">Tutor</span> Today
         </div>
         <div class="search-bar-container">
-          <input type="text" class="search-bar" placeholder="Search for any subject..." />
+          <!-- Use v-model to bind input value to searchTerm -->
+          <input v-model="searchTerm" type="text" class="search-bar" placeholder="Search for any subject..." />
           <button class="search-button" @click="search"></button>
         </div>
         <div class="popular-options">
