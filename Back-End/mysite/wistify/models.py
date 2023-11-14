@@ -16,6 +16,19 @@ class User(AbstractUser):
     
 class Learner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class Tutor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
     
+class Rating(models.Model):
+    star = models.FloatField(blank=False, null=False)
+    review = models.CharField(max_length=300)
+    learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     
-    
+# {
+#  "star": 4,
+#  "review": "Good Teaching",
+#  "learner_id": 1,
+#  "tutor_id": 1
+# }

@@ -1,10 +1,11 @@
 import string
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import User, Learner
+from .models import User, Learner, Tutor, Rating
 from django.contrib.auth.hashers import make_password
 
 LETTERS = set(string.ascii_letters)
+SCORE = {float(n) for n in range(1, 6)}
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -65,6 +66,13 @@ class LearnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Learner
         fields = '__all__'
+        
+class TutorSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    
+    class Meta:
+        model = Tutor
+        fields = '__all__'
   
         
 class LogInSerializer(serializers.ModelSerializer):
@@ -84,6 +92,31 @@ class LogInSerializer(serializers.ModelSerializer):
             raise ValidationError("Wrong JSON data format")
 
         return data 
+    
+class RatingSerializer(serializers.ModelSerializer):
+    learner_id = serializers.IntegerField(required=True)
+    tutor_id = serializers.IntegerField(required=True)
+    
+    class Meta:
+        model = Rating
+        fields = ['star', 'review', 'learner_id', 'tutor_id']
+        
+    def validate(self, data):
+        right_format = set(data.keys()) == set(self.Meta.fields)
+        
+        if data['star'] not in SCORE:
+            raise ValidationError("Wrong Score")
+        
+        if not right_format:
+            raise ValidationError("Wrong JSON data format")
+        
+        return data
+    
+class RS(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Rating
+        fields = '__all__'
         
      
     
