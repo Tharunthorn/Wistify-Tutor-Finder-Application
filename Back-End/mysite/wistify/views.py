@@ -6,7 +6,7 @@ from .serializers import LearnerSerializer
 from .serializers import TutorSerializer
 from .serializers import LogInSerializer
 from .serializers import SignUpSerializer
-from .serializers import RatingSerializer, RS
+from .serializers import RatingSerializer, SecondRatingSerializer
 from .authentication import create_access_token
 from .authentication import create_refresh_token
 from django.contrib.auth.hashers import check_password
@@ -29,7 +29,7 @@ class GetTutor(APIView):
 class GetRating(APIView):
     def get(self, request):
         rating = Rating.objects.all()
-        serializer = RS(rating, many=True)
+        serializer = SecondRatingSerializer(rating, many=True)
         
         return Response(serializer.data)
 
@@ -55,7 +55,7 @@ class TutorSignUp(APIView):
         user = user_serializer.save()
         
         tutor = Tutor.objects.create(user=user)
-        tutor_seriailizer = LearnerSerializer(tutor)
+        tutor_seriailizer = TutorSerializer(tutor)
         
         return Response(tutor_seriailizer.data)
 
@@ -120,12 +120,13 @@ class UserRating(APIView):
         except Rating.DoesNotExist:
             Rating.objects.create(learner=learner, tutor=tutor, star=star, review=review)
         else:
-           rating.star = star
-           rating.review = review
+           rating.star, rating.review = star, review
            rating.save()
+           
+        second_rating = SecondRatingSerializer(rating)
         
         
-        return Response(rating_serializer.data)
+        return Response(second_rating.data)
         
         
         

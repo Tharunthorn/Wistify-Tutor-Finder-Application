@@ -26,9 +26,3 @@ class Rating(models.Model):
     learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     
-# {
-#  "star": 4,
-#  "review": "Good Teaching",
-#  "learner_id": 1,
-#  "tutor_id": 1
-# }

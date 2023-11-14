@@ -112,7 +112,9 @@ class RatingSerializer(serializers.ModelSerializer):
         
         return data
     
-class RS(serializers.ModelSerializer):
+class SecondRatingSerializer(serializers.ModelSerializer):
+    learner = LearnerSerializer()
+    tutor = TutorSerializer()
     
     class Meta:
         model = Rating
