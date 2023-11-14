@@ -1,64 +1,51 @@
 <template>
-  <div>
-    <NavBar />
-    <div class="signin-page">
-      <img class="background-image" src="public/Background_Blur.svg" alt="Background Image" />
-      <div class="signin-box">
-        <h1 class="signin-title">Welcome Back</h1>
-        <input v-model="emailAddress" type="email" placeholder="Email Address" class="signin-input" />
-        <input v-model="password" type="password" placeholder="Password" class="signin-input" />
-        <button @click="submitForm" class="submit-button">SignIn</button>
-        <router-link to="/SignIn" class="back-button">Back</router-link>
-        <!-- Display error message if there's an error -->
-        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-      </div>
+  <NavBar />
+  <div class="signup-page">
+    <img class="background-image" src="public/Background_Blur.svg" alt="Background Image" />
+    <div class="signup-box">
+      <img class="logo" src="public/Logo_black.svg" alt="WISTIFY Logo" />
+      <input v-model="firstName" type="text" placeholder="First Name" class="signup-input" />
+      <input v-model="lastName" type="text" placeholder="Last Name" class="signup-input" />
+      <input v-model="emailAddress" type="email" placeholder="Email Address" class="signup-input" />
+      <input v-model="password" type="password" placeholder="Password" class="signup-input" />
+      <button @click="submitForm" class="submit-button">Next</button>
+      <router-link to="/SignUp" class="back-button">Back</router-link>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from "./NavBar.vue";
+import router from "../router/index.js";
 
 export default {
-  components: { NavBar },
+  components: {NavBar},
   data() {
     return {
+      firstName: '',
+      lastName: '',
       emailAddress: '',
-      password: '',
-      errorMessage: '', // Added to store error message
+      password: ''
     };
   },
   methods: {
     submitForm() {
-      // Mocking data for demonstration purposes
-      const mockUser = {
-        emailAddress: 'johndoe@example.com',
-        password: 'johndoe123',
-      };
-
-      // Check if entered credentials match mock data
-      if (
-          this.emailAddress === mockUser.emailAddress &&
-          this.password === mockUser.password
-      ) {
-        // Successful login simulation
-        console.log('Login successful!');
-        this.$router.push('/'); // Redirect to the home page or any desired route
-
-        // Dispatch the action to update loggedIn state in the Vuex store
-        this.$store.commit('setLoggedIn', true);
+      // Check if all fields are filled in
+      if (this.firstName && this.lastName && this.emailAddress && this.password) {
+        // Add your form submission logic here
+        router.push({ path: '/SignUpTutorTagsSelection' });
       } else {
-        // Display error message for incorrect credentials
-        this.errorMessage = 'Invalid email or password. Please try again.';
+        // Display an error message or handle the lack of input fields
+        console.log('Please fill in all fields');
       }
-    },
-  },
+    }
+  }
   // Add logic here if needed
-};
+}
 </script>
 
 <style scoped>
-.signin-page {
+.signup-page {
   position: fixed;
   top: 0;
   left: 0;
@@ -72,7 +59,7 @@ export default {
   object-fit: cover;
 }
 
-.signin-box {
+.signup-box {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -96,7 +83,7 @@ export default {
   /* Add more styling for your logo if needed */
 }
 
-.signin-input {
+.signup-input {
   width: 438px;
   height: 30px;
   padding: 10px;
@@ -108,7 +95,7 @@ export default {
   border-radius: 7px;
 }
 
-.signin-input:focus {
+.signup-input:focus {
   outline: none;
   border-color: #B8E830;
 }
@@ -153,16 +140,5 @@ export default {
 .back-button:hover {
   background-color: #000;
   color: #FFF;
-}
-
-.signin-title {
-  font-family: 'Gochi Hand', cursive;
-  font-size: 4rem;
-  margin-bottom: 100px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
 }
 </style>

@@ -5,6 +5,9 @@ import SignUpPageEmail from "../components/SignUpPageEmail.vue";
 import ExplorePage from "../components/ExplorePage.vue";
 import SignInPage from "../components/SignInPage.vue";
 import SignInPageEmail from "../components/SignInPageEmail.vue";
+import TutorSignUpPage from "../components/TutorSignUpPage.vue";
+import TutorSignUpPageEmail from "../components/TutorSignUpPageEmail.vue";
+import TutorSignUpTagSelectionPage from "../components/TutorSignUpTagSelectionPage.vue";
 
 
 const routes = [
@@ -24,6 +27,24 @@ const routes = [
         path: '/SignUpEmail',
         name: 'SignUpEmail',
         component: SignUpPageEmail,
+    },
+
+    {
+        path: '/SignUpTutor',
+        name: 'SignUpTutor',
+        component: TutorSignUpPage,
+    },
+
+    {
+        path: '/SignUpEmailTutor',
+        name: 'SignUpEmailTutor',
+        component: TutorSignUpPageEmail,
+    },
+
+    {
+        path: '/SignUpTutorTagsSelection',
+        name: 'SignUpTutorTagSelection',
+        component: TutorSignUpTagSelectionPage,
     },
 
     {

@@ -117,6 +117,7 @@ export default {
   border: none;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.4);
+
   margin-left: 14.6rem; /* Adjusted space from the left edge in rem */
 }
 
