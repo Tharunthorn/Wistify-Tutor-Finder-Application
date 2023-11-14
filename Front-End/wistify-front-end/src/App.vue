@@ -5,7 +5,10 @@
 </template>
 
 <script>
+import ProfilePage from "./components/ProfilePage.vue";
+
 export default {
+  components: {ProfilePage}
   // Your logic for the App component
 };
 </script>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from "../components/LandingPage.vue";
+import ProfilePage from "../components/ProfilePage.vue";
 import SignUpPage from "../components/SignUpPage.vue";
 import SignUpPageEmail from "../components/SignUpPageEmail.vue";
 import ExplorePage from "../components/ExplorePage.vue";
@@ -15,6 +16,12 @@ const routes = [
         path: '/',
         name: 'LandingPage',
         component: LandingPage,
+    },
+
+    {
+        path: '/Profile',
+        name: 'ProfilePage',
+        component: ProfilePage,
     },
 
     {
@@ -65,6 +72,7 @@ const routes = [
         props: true,
         component: ExplorePage,
     }
+
 ];
 
 const router = createRouter({
