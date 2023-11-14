@@ -1,42 +1,49 @@
 <template>
-  <NavBar />
-  <div class="main-container">
-    <div class="search-container">
-      <input
-          v-model="searchTerm"
-          @input="searchItems"
-          type="text"
-          placeholder="Search..."
-          class="search-bar"
-      />
-    </div>
+  <div>
+    <NavBar />
+    <div class="main-container">
+      <div class="search-container">
+        <input
+            v-model="searchTerm"
+            @input="searchItems"
+            type="text"
+            placeholder="Search..."
+            class="search-bar"
+        />
+      </div>
 
-    <div v-if="filteredItems.length > 0" class="item-grid">
-      <router-link v-for="item in filteredItems" :key="item.id" :to="'/Tutor/' + item.id" class="item-card">
-        <!-- Display item information here -->
-        <div class="item-image" :style="{ backgroundImage: 'url(' + item.banner + ')' }"></div>
-        <div class="item-details">
-          <div class="item-name font-semibold">{{ item.name }}</div>
-          <div class="item-subjects text-gray-500">
+      <div v-if="filteredItems.length > 0" class="item-grid">
+        <router-link
+            v-for="item in filteredItems"
+            :key="item.id"
+            :to="'/Tutor/' + item.id"
+            class="item-card"
+        >
+          <!-- Display item information here -->
+          <div class="item-image" :style="{ backgroundImage: 'url(' + item.banner + ')' }"></div>
+          <div class="item-details">
+            <div class="item-name font-semibold">{{ item.name }}</div>
+            <div class="item-subjects text-gray-500">
               <span v-for="(subject, index) in item.subjects" :key="index">
                 {{ subject }}
                 <span v-if="index < item.subjects.length - 1">, </span>
               </span>
+            </div>
+            <div class="item-rating">Rating: {{ item.rating }}</div>
+            <div class="item-description">{{ item.description }}</div>
           </div>
-          <div class="item-rating">Rating: {{ item.rating }}</div>
-          <div class="item-description">{{ item.description }}</div>
-        </div>
-        <!-- Add more item details as needed -->
-      </router-link>
+          <!-- Add more item details as needed -->
+        </router-link>
+      </div>
+
+      <div v-if="filteredItems.length === 0" class="no-items-found">
+        No items found.
+      </div>
     </div>
 
-    <div v-if="filteredItems.length === 0" class="no-items-found">
-      No items found.
+    <div class="footer">
+      <p class="footer-text">© 2023 Wistify. All rights reserved.</p>
     </div>
-  </div>
-
-  <div class="footer">
-    <p class="footer-text">© 2023 Wistify. All rights reserved.</p>
   </div>
 </template>
 
@@ -47,7 +54,7 @@ export default {
   components: { NavBar },
   data() {
     return {
-      searchTerm: "",
+      searchTerm: this.$route.query.searchTerm || "", // Use $route.query instead of $route.params
       items: [
         {
           id: 1,
@@ -290,8 +297,18 @@ export default {
           description: "Appreciate the art of poetry and literature with Olivia's engaging English literature sessions.",
         },
         // Add more items as needed
-      ]
+      ],
     };
+  },
+  watch: {
+    '$route.query.searchTerm': function (newSearchTerm) {
+      this.searchTerm = newSearchTerm || "";
+      this.searchItems(); // trigger search on route change
+    },
+  },
+  created() {
+    // Fetch data or perform any other initialization here
+    // You can also trigger the search here if needed
   },
   computed: {
     filteredItems() {
@@ -384,7 +401,6 @@ body {
   }
 }
 
-
 /* Style the item image */
 .item-image {
   background-size: cover;
@@ -455,5 +471,5 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem; /* Adjust the font size */
 }
-
 </style>
+

@@ -41,6 +41,7 @@ const routes = [
     {
         path: '/Explore',
         name: 'Explore',
+        props: true,
         component: ExplorePage,
     }
 ];

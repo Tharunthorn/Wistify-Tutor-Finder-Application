@@ -9,11 +9,11 @@
         </div>
         <div class="search-bar-container">
           <input type="text" class="search-bar" placeholder="Search for any subject..." />
-          <button class="search-button"></button>
+          <button class="search-button" @click="search"></button>
         </div>
         <div class="popular-options">
           <span class="popular-label">Popular:</span>
-          <button v-for="option in popularOptions" :key="option" :class="['popular-option', getButtonWidth(option)]">{{ option }}</button>
+          <button v-for="option in popularOptions" :key="option" :class="['popular-option', getButtonWidth(option)]" @click="searchByOption(option)">{{ option }}</button>
         </div>
       </div>
     </div>
@@ -32,12 +32,21 @@ export default {
   components: {NavBar},
   data() {
     return {
+      searchTerm: "", // Bind input value to this property
       popularOptions: ['Math', 'English', 'Physics', 'Chemistry', 'Biology']
     }
   },
   methods: {
     getButtonWidth(option) {
       return `popular-option-${option.length > 6 ? 'long' : 'short'}`;
+    },
+    search() {
+      // Use Vue Router to navigate to the search results page
+      this.$router.push({ path: '/Explore', query: { searchTerm: this.searchTerm } });
+    },
+    searchByOption(option) {
+      // Use Vue Router to navigate to the search results page with the selected option
+      this.$router.push({ path: '/Explore', query: { searchTerm: option } });
     }
   }
 }
