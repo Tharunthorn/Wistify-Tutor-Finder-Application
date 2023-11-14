@@ -3,6 +3,8 @@ import LandingPage from "../components/LandingPage.vue";
 import SignUpPage from "../components/SignUpPage.vue";
 import SignUpPageEmail from "../components/SignUpPageEmail.vue";
 import ExplorePage from "../components/ExplorePage.vue";
+import SignInPage from "../components/SignInPage.vue";
+import SignInPageEmail from "../components/SignInPageEmail.vue";
 
 
 const routes = [
@@ -22,6 +24,18 @@ const routes = [
         path: '/SignUpEmail',
         name: 'SignUpEmail',
         component: SignUpPageEmail,
+    },
+
+    {
+        path: '/SignIn',
+        name: 'SignIn',
+        component: SignInPage,
+    },
+
+    {
+        path: '/SignInEmail',
+        name: 'SignInEmail',
+        component: SignInPageEmail,
     },
 
     {
