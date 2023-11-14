@@ -318,8 +318,7 @@ export default {
       return this.items.filter(
           (item) =>
               item.name.toLowerCase().includes(searchTerm) ||
-              item.subjects.some((subject) => subject.toLowerCase().includes(searchTerm)) ||
-              item.description.toLowerCase().includes(searchTerm)
+              item.subjects.some((subject) => subject.toLowerCase().includes(searchTerm))
       );
     },
   },
