@@ -1,12 +1,18 @@
 <template>
   <div>
     <nav class="navbar">
-      <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
+      <a href="/">
+        <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
+      </a>
       <div class="navbar-menu">
-        <a class="navbar-item" href="/">Explore</a>
-        <a class="navbar-item" href="/SignUpTutor">Become Tutor</a>
-        <a class="navbar-item" href="/SignIn">Sign In</a>
-        <a class="navbar-item-join" href="/SignUp">Join</a>
+        <a v-if="!loggedIn" class="navbar-item" href="/Explore">Explore</a>
+        <a v-if="!loggedIn" class="navbar-item" href="/SignUpTutor">Become Tutor</a>
+        <a v-if="!loggedIn" class="navbar-item" href="/SignIn">Sign In</a>
+        <a v-if="!loggedIn" class="navbar-item-join" href="/SignUp">Join</a>
+        <div v-if="loggedIn" class="navbar-item">
+          {{ user.firstName + ' ' + user.lastName }}
+        </div>
+        <a v-if="loggedIn" @click="logout" class="navbar-item" href="/">Logout</a>
       </div>
     </nav>
   </div>
@@ -14,9 +20,27 @@
 
 <script>
 export default {
-  // You can add component logic here if needed
-}
+  computed: {
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+    user() {
+      return this.$store.state.user;
+    },
+  },
+  methods: {
+    logout() {
+      // Dispatch an action to reset the loggedIn state
+      this.$store.commit('setLoggedIn', false);
+
+      // Add any other logout logic if needed, such as redirecting to a login page
+      this.$router.push('/SignIn');
+    },
+  },
+};
 </script>
+
+
 
 <style scoped>
 /* Import Montserrat font from Google Fonts */
@@ -105,5 +129,16 @@ export default {
   .navbar-menu {
     display: none; /* Hide menu items on smaller screens */
   }
+}
+
+.logout-link {
+  color: #B8E830;
+  margin-left: 1.7333rem; /* Adjusted space from the previous item in rem */
+  font-weight: 500;
+  transition: color 0.3s; /* Smooth transition on color change */
+}
+
+.logout-link:hover {
+  color: #FCFBFC; /* Change the text color on hover */
 }
 </style>

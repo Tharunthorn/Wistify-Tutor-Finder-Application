@@ -8,12 +8,13 @@
           Discover Your <span class="highlight-font">Tutor</span> Today
         </div>
         <div class="search-bar-container">
-          <input type="text" class="search-bar" placeholder="Search for any subject..." />
-          <button class="search-button"></button>
+          <!-- Use v-model to bind input value to searchTerm -->
+          <input v-model="searchTerm" type="text" class="search-bar" placeholder="Search for any subject..." />
+          <button class="search-button" @click="search"></button>
         </div>
         <div class="popular-options">
           <span class="popular-label">Popular:</span>
-          <button v-for="option in popularOptions" :key="option" :class="['popular-option', getButtonWidth(option)]">{{ option }}</button>
+          <button v-for="option in popularOptions" :key="option" :class="['popular-option', getButtonWidth(option)]" @click="searchByOption(option)">{{ option }}</button>
         </div>
       </div>
     </div>
@@ -32,12 +33,21 @@ export default {
   components: {NavBar},
   data() {
     return {
+      searchTerm: "", // Bind input value to this property
       popularOptions: ['Math', 'English', 'Physics', 'Chemistry', 'Biology']
     }
   },
   methods: {
     getButtonWidth(option) {
       return `popular-option-${option.length > 6 ? 'long' : 'short'}`;
+    },
+    search() {
+      // Use Vue Router to navigate to the search results page
+      this.$router.push({ path: '/Explore', query: { searchTerm: this.searchTerm } });
+    },
+    searchByOption(option) {
+      // Use Vue Router to navigate to the search results page with the selected option
+      this.$router.push({ path: '/Explore', query: { searchTerm: option } });
     }
   }
 }
@@ -102,11 +112,12 @@ export default {
   height: 2.5rem;
   background-color: #FFF;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.60);
-  border-radius: 0.469rem;
+  border-radius: 0.469rem 0  0 0.469rem ;
   padding: 0.5rem 1rem;
   border: none;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.4);
+
   margin-left: 14.6rem; /* Adjusted space from the left edge in rem */
 }
 
@@ -115,13 +126,13 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   width: 4.6875rem; /* Converted width to rem */
-  height: 3.5rem;
+  height: 2.5rem;
   background-color: #B8E830;
   color: #FFF;
   border: none;
   border-radius: 0 0.469rem 0.469rem 0;
   font-size: 1rem;
-  margin-left: -4.69rem;
+
   padding: 0.5rem 1rem;
 }
 
