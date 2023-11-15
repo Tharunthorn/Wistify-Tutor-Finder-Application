@@ -4,11 +4,13 @@
     <img class="background-image" src="public/Background_Blur.svg" alt="Background Image" />
     <div class="signup-box">
       <img class="logo" src="public/Logo_black.svg" alt="WISTIFY Logo" />
-      <input v-model="firstName" type="text" placeholder="First Name" class="signup-input" />
-      <input v-model="lastName" type="text" placeholder="Last Name" class="signup-input" />
-      <input v-model="emailAddress" type="email" placeholder="Email Address" class="signup-input" />
-      <input v-model="password" type="password" placeholder="Password" class="signup-input" />
-      <button @click="submitForm" class="submit-button">Submit</button>
+      <form @submit.prevent="submitForm" method="post">
+        <input v-model="firstName" type="text" placeholder="First Name" class="signup-input" />
+        <input v-model="lastName" type="text" placeholder="Last Name" class="signup-input" />
+        <input v-model="emailAddress" type="email" placeholder="Email Address" class="signup-input" />
+        <input v-model="password" type="password" placeholder="Password" class="signup-input" />
+        <button type="submit" class="submit-button" >Submit</button>
+      </form>
       <router-link to="/SignUp" class="back-button">Back</router-link>
     </div>
   </div>
@@ -16,6 +18,7 @@
 
 <script>
 import NavBar from "./NavBar.vue";
+import axios from "axios";
 
 export default {
   components: {NavBar},
@@ -28,9 +31,19 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      // Add your form submission logic here
-      console.log('Form submitted!');
+    async submitForm() {
+      try {
+        const response = await axios.post("http://localhost:8000/learner_sign_up/", {
+          email: this.emailAddress,
+          first_name: this.firstName,
+          last_name: this.lastName,
+          password: this.password,
+        });
+
+        console.log(response.data);
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
   // Add logic here if needed
