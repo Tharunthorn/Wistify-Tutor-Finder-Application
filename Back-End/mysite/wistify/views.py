@@ -11,7 +11,6 @@ from .authentication import create_access_token
 from .authentication import create_refresh_token
 from django.contrib.auth.hashers import check_password
 
-
 class GetLearner(APIView):
     def get(self, request):
         learner = Learner.objects.all()
