@@ -19,6 +19,7 @@
 <script>
 import NavBar from "./NavBar.vue";
 import axios from "axios";
+import router from "../router/index.js";
 
 export default {
   components: {NavBar},
@@ -41,6 +42,7 @@ export default {
         });
 
         console.log(response.data);
+        router.push("/SignIn");
       } catch (error) {
         console.error(error)
       }
