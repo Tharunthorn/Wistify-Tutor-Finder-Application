@@ -5,14 +5,18 @@
         <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
       </a>
       <div class="navbar-menu">
-        <a v-if="!loggedIn" class="navbar-item" href="/Explore">Explore</a>
-        <a v-if="!loggedIn" class="navbar-item" href="/SignUpTutor">Become Tutor</a>
-        <a v-if="!loggedIn" class="navbar-item" href="/SignIn">Sign In</a>
-        <a v-if="!loggedIn" class="navbar-item-join" href="/SignUp">Join</a>
-        <div v-if="loggedIn" class="navbar-item">
-          {{ user.firstName + ' ' + user.lastName }}
-        </div>
-        <a v-if="loggedIn" @click="logout" class="navbar-item" href="/">Logout</a>
+        <template v-if="!loggedIn">
+          <a class="navbar-item" href="/Explore">Explore</a>
+          <a class="navbar-item" href="/SignUpTutor">Become Tutor</a>
+          <a class="navbar-item" href="/SignIn">Sign In</a>
+          <a class="navbar-item-join" href="/SignUp">Join</a>
+        </template>
+        <template v-else>
+          <div class="navbar-item">
+            {{ user.firstName + ' ' + user.lastName }}
+          </div>
+          <a @click="logout" class="navbar-item" href="/">Logout</a>
+        </template>
       </div>
     </nav>
   </div>
@@ -39,8 +43,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style scoped>
 /* Import Montserrat font from Google Fonts */

@@ -5,9 +5,11 @@
       <img class="background-image" src="public/Background_Blur.svg" alt="Background Image" />
       <div class="signin-box">
         <h1 class="signin-title">Welcome Back</h1>
-        <input v-model="emailAddress" type="email" placeholder="Email Address" class="signin-input" />
-        <input v-model="password" type="password" placeholder="Password" class="signin-input" />
-        <button @click="submitForm" class="submit-button">SignIn</button>
+        <form @submit.prevent="submitForm">
+          <input v-model="emailAddress" type="email" placeholder="Email Address" class="signin-input" />
+          <input v-model="password" type="password" placeholder="Password" class="signin-input" />
+          <button type="submit" class="submit-button">SignIn</button>
+        </form>
         <router-link to="/SignIn" class="back-button">Back</router-link>
         <!-- Display error message if there's an error -->
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -18,6 +20,7 @@
 
 <script>
 import NavBar from "./NavBar.vue";
+import axios from "axios";
 
 export default {
   components: { NavBar },
@@ -29,30 +32,28 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      // Mocking data for demonstration purposes
-      const mockUser = {
-        emailAddress: 'johndoe@example.com',
-        password: 'johndoe123',
-      };
+  async submitForm() {
+    try {
+      const response = await axios.post("http://localhost:8000/log_in/", {
+        email: this.emailAddress,
+        password: this.password,
+      });
 
-      // Check if entered credentials match mock data
-      if (
-          this.emailAddress === mockUser.emailAddress &&
-          this.password === mockUser.password
-      ) {
-        // Successful login simulation
-        console.log('Login successful!');
-        this.$router.push('/'); // Redirect to the home page or any desired route
+      const token = response.data.token;
 
-        // Dispatch the action to update loggedIn state in the Vuex store
-        this.$store.commit('setLoggedIn', true);
-      } else {
-        // Display error message for incorrect credentials
-        this.errorMessage = 'Invalid email or password. Please try again.';
-      }
-    },
+      localStorage.setItem("token", token);
+
+      // Dispatch the action to fetch user details
+      this.$store.dispatch('fetchUser');
+
+      this.$router.push("/");
+
+    } catch (error) {
+      console.error(error);
+      this.errorMessage = "Invalid email or password. Please try again.";
+    }
   },
+},
   // Add logic here if needed
 };
 </script>
