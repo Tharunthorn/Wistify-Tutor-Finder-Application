@@ -119,7 +119,8 @@ class UserRating(APIView):
         except Rating.DoesNotExist:
             Rating.objects.create(learner=learner, tutor=tutor, star=star, review=review)
         else:
-           rating.star, rating.review = star, review
+           rating.star = star
+           rating.review = review
            rating.save()
            
         second_rating = SecondRatingSerializer(rating)

@@ -22,7 +22,7 @@ class Tutor(models.Model):
     
 class Rating(models.Model):
     star = models.FloatField(blank=False, null=False)
-    review = models.CharField(max_length=300)
+    review = models.CharField(blank=True, null=True, max_length=300)
     learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     
