@@ -1,11 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import APIException
-from .models import Learner, Tutor, Rating
-from .serializers import LearnerSerializer
+from .models import Learner, Tutor, Rating, Tag, Video
+from .serializers import LearnerSerializer, VideoSerializer, TagSerializer
 from .serializers import TutorSerializer, UserSerializer
-from .serializers import LogInSerializer
-from .serializers import SignUpSerializer
+from .serializers import LogInSerializer, SecondVideoSerializer
+from .serializers import SignUpSerializer, SecondTagSerializer
 from .serializers import RatingSerializer, SecondRatingSerializer
 from .authentication import create_access_token
 from .authentication import create_refresh_token
@@ -32,6 +32,20 @@ class GetRating(APIView):
         
         return Response(serializer.data)
 
+class GetTag(APIView):
+    def get(self, request):
+        rating = Tag.objects.all()
+        serializer = SecondTagSerializer(rating, many=True)
+        
+        return Response(serializer.data)
+    
+class GetVideo(APIView):
+    def get(self, request):
+        rating = Video.objects.all()
+        serializer = SecondVideoSerializer(rating, many=True)
+        
+        return Response(serializer.data)
+    
 class LearnerSignUp(APIView):
     def post(self, request):
         user_serializer = SignUpSerializer(data=request.data)
@@ -129,6 +143,45 @@ class UserRating(APIView):
         
         
         return Response(second_rating.data)
+    
+class AddVideo(APIView):
+    def post(self, request):
+        video_serializer = VideoSerializer(data=request.data)
+        video_serializer.is_valid(raise_exception=True)
+        video_serializer.validate(request.data)
+        
+        tutor_id = request.data['tutor_id']
+        url = request.data['url']
+        
+        try:
+            tutor = Tutor.objects.get(pk=tutor_id)
+        except Tutor.DoesNotExist:
+            raise APIException('Tutor with the requested ID does not exist')  
+        
+        video = Video.objects.create(url=url, tutor=tutor)
+        video = SecondVideoSerializer(video)
+        
+        return Response(video.data) 
+    
+class AddTag(APIView):
+    def post(self, request):
+        tag_serializer = TagSerializer(data=request.data)
+        tag_serializer.is_valid(raise_exception=True)
+        tag_serializer.validate(request.data)
+        
+        tutor_id = request.data['tutor_id']
+        area = request.data['area']
+        
+        try:
+            tutor = Tutor.objects.get(pk=tutor_id)
+        except Tutor.DoesNotExist:
+            raise APIException('Tutor with the requested ID does not exist')  
+        
+        tag = Tag.objects.create(area=area, tutor=tutor)
+        tag = SecondTagSerializer(tag)
+        
+        return Response(tag.data) 
+        
         
         
         
