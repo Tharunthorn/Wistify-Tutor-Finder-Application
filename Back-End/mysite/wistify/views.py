@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import APIException
 from .models import Learner, Tutor, Rating
 from .serializers import LearnerSerializer
-from .serializers import TutorSerializer
+from .serializers import TutorSerializer, UserSerializer
 from .serializers import LogInSerializer
 from .serializers import SignUpSerializer
 from .serializers import RatingSerializer, SecondRatingSerializer
@@ -92,8 +92,10 @@ class LogIn(APIView):
         
         response = Response()
         response.set_cookie(key='refreshToken', value=refresh_token, httponly=True)
+        user = UserSerializer(user)
         response.data = {
-            'token': access_token
+            'token': access_token,
+            'user': user.data
         }
         
         return response

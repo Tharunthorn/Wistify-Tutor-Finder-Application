@@ -5,18 +5,14 @@
         <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
       </a>
       <div class="navbar-menu">
-        <template v-if="!loggedIn">
-          <a class="navbar-item" href="/Explore">Explore</a>
-          <a class="navbar-item" href="/SignUpTutor">Become Tutor</a>
-          <a class="navbar-item" href="/SignIn">Sign In</a>
-          <a class="navbar-item-join" href="/SignUp">Join</a>
-        </template>
-        <template v-else>
-          <div class="navbar-item">
-            {{ user.firstName + ' ' + user.lastName }}
-          </div>
-          <a @click="logout" class="navbar-item" href="/">Logout</a>
-        </template>
+        <a v-if="!loggedIn" class="navbar-item" href="/Explore">Explore</a>
+        <a v-if="!loggedIn" class="navbar-item" href="/SignUpTutor">Become Tutor</a>
+        <a v-if="!loggedIn" class="navbar-item" href="/SignIn">Sign In</a>
+        <a v-if="!loggedIn" class="navbar-item-join" href="/SignUp">Join</a>
+        <div v-if="loggedIn" class="navbar-item">
+          {{ user.firstName + ' ' + user.lastName }}
+        </div>
+        <a v-if="loggedIn" @click="logout" class="navbar-item" href="/">Logout</a>
       </div>
     </nav>
   </div>
@@ -36,7 +32,7 @@ export default {
     logout() {
       // Dispatch an action to reset the loggedIn state
       this.$store.commit('setLoggedIn', false);
-
+      localStorage.removeItem('token');
       // Add any other logout logic if needed, such as redirecting to a login page
       this.$router.push('/SignIn');
     },

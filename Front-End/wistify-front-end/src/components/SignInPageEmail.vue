@@ -5,11 +5,9 @@
       <img class="background-image" src="public/Background_Blur.svg" alt="Background Image" />
       <div class="signin-box">
         <h1 class="signin-title">Welcome Back</h1>
-        <form @submit.prevent="submitForm">
           <input v-model="emailAddress" type="email" placeholder="Email Address" class="signin-input" />
           <input v-model="password" type="password" placeholder="Password" class="signin-input" />
-          <button type="submit" class="submit-button">SignIn</button>
-        </form>
+          <button @click="submitForm" class="submit-button">SignIn</button>
         <router-link to="/SignIn" class="back-button">Back</router-link>
         <!-- Display error message if there's an error -->
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -28,33 +26,32 @@ export default {
     return {
       emailAddress: '',
       password: '',
-      errorMessage: '', // Added to store error message
+      errorMessage: '',
     };
   },
   methods: {
-  async submitForm() {
-    try {
-      const response = await axios.post("http://localhost:8000/log_in/", {
-        email: this.emailAddress,
-        password: this.password,
-      });
+    async submitForm() {
+      try {
+        const response = await axios.post("http://localhost:8000/log_in/", {
+          email: this.emailAddress,
+          password: this.password,
+        });
 
-      const token = response.data.token;
+        const { token, user } = response.data;
 
-      localStorage.setItem("token", token);
+        localStorage.setItem("token", token);
 
-      // Dispatch the action to fetch user details
-      this.$store.dispatch('fetchUser');
+        this.$store.commit('setLoggedIn', true);
+        this.$store.commit('setUser', user);
 
-      this.$router.push("/");
+        this.$router.push("/");
 
-    } catch (error) {
-      console.error(error);
-      this.errorMessage = "Invalid email or password. Please try again.";
-    }
+      } catch (error) {
+        console.error(error);
+        this.errorMessage = "Invalid email or password. Please try again.";
+      }
+    },
   },
-},
-  // Add logic here if needed
 };
 </script>
 
