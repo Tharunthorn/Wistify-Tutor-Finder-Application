@@ -32,15 +32,13 @@ export default {
     logout() {
       // Dispatch an action to reset the loggedIn state
       this.$store.commit('setLoggedIn', false);
-
+      localStorage.removeItem('token');
       // Add any other logout logic if needed, such as redirecting to a login page
       this.$router.push('/SignIn');
     },
   },
 };
 </script>
-
-
 
 <style scoped>
 /* Import Montserrat font from Google Fonts */
