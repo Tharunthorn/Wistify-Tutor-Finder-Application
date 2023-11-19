@@ -1,9 +1,9 @@
 <template>
   <NavBar />
   <div class="signup-page">
-    <img class="background-image" src="public/Background_Blur.svg" alt="Background Image" />
+    <img class="background-image" src="/Background_Blur.svg" alt="Background Image" />
     <div class="signup-box">
-      <img class="logo" src="public/Logo_black.svg" alt="WISTIFY Logo" />
+      <img class="logo" src="/Logo_black.svg" alt="WISTIFY Logo" />
       <router-link to="/SignUpEmail" class="signup-button email">EMAIL</router-link>
       <router-link to="/" class="signup-button google">GOOGLE</router-link>
       <!-- Your signup form content goes here -->

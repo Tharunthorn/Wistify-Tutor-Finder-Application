@@ -9,6 +9,7 @@ import SignInPageEmail from "../components/SignInPageEmail.vue";
 import TutorSignUpPage from "../components/TutorSignUpPage.vue";
 import TutorSignUpPageEmail from "../components/TutorSignUpPageEmail.vue";
 import TutorSignUpTagSelectionPage from "../components/TutorSignUpTagSelectionPage.vue";
+import TutorPage from "../components/TutorPage.vue";
 
 
 const routes = [
@@ -71,7 +72,13 @@ const routes = [
         name: 'Explore',
         props: true,
         component: ExplorePage,
-    }
+    },
+
+    {
+        path: "/Tutor/:id",
+        name: "TutorPage",
+        component: TutorPage,
+    },
 
 ];
 
