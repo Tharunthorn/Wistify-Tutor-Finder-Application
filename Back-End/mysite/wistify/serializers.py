@@ -1,7 +1,7 @@
 import string
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import User, Learner, Tutor, Rating
+from .models import User, Learner, Tutor, Rating, Video, Tag
 from django.contrib.auth.hashers import make_password
 
 LETTERS = set(string.ascii_letters)
@@ -118,6 +118,51 @@ class SecondRatingSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Rating
+        fields = '__all__'
+        
+class VideoSerializer(serializers.ModelSerializer):
+    tutor_id = serializers.IntegerField(required=True)
+    
+    class Meta:
+        model = Video
+        fields = ['url', 'tutor_id']
+        
+    def validate(self, data):
+        right_format = set(data.keys()) == set(self.Meta.fields)
+        
+        if not right_format:
+            raise ValidationError("Wrong JSON data format")
+        
+        return data
+        
+class SecondVideoSerializer(serializers.ModelSerializer):
+    tutor = TutorSerializer()
+    
+    class Meta:
+        model = Video
+        fields = '__all__'
+        
+        
+class TagSerializer(serializers.ModelSerializer):
+    tutor_id = serializers.IntegerField(required=True)
+    
+    class Meta:
+        model = Tag
+        fields = ['area', 'tutor_id']
+        
+    def validate(self, data):
+        right_format = set(data.keys()) == set(self.Meta.fields)
+        
+        if not right_format:
+            raise ValidationError("Wrong JSON data format")
+        
+        return data
+        
+class SecondTagSerializer(serializers.ModelSerializer):
+    tutor = TutorSerializer()
+    
+    class Meta:
+        model = Tag
         fields = '__all__'
         
      

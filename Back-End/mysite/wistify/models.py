@@ -20,6 +20,14 @@ class Learner(models.Model):
 class Tutor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) 
     
+class Video(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, blank=False, null=False)
+    url = models.URLField(max_length=200, blank=False, null=False)
+    
+class Tag(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, blank=False, null=False)
+    area = models.CharField(max_length=100, blank=False, null=False)
+    
 class Rating(models.Model):
     star = models.FloatField(blank=False, null=False)
     review = models.CharField(blank=True, null=True, max_length=300)
