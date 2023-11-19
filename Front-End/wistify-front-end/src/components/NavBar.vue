@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar">
       <a href="/">
-        <img src="public/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
+        <img src="/Logo.svg" alt="WISTIFY Logo" class="navbar-logo" />
       </a>
       <div class="navbar-menu">
         <a v-if="!loggedIn" class="navbar-item" href="/Explore">Explore</a>

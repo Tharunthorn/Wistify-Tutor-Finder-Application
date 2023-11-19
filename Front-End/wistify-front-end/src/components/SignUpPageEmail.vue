@@ -34,7 +34,7 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const response = await axios.post("http://localhost:8000/learner_sign_up/", {
+        const response = await axios.post("http://127.0.0.1:8002/learner_sign_up/", {
           email: this.emailAddress,
           first_name: this.firstName,
           last_name: this.lastName,
