@@ -2,11 +2,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import APIException
 from .models import Learner, Tutor, Rating, Tag, Video
-from .serializers import LearnerSerializer, VideoSerializer, TagSerializer
+from .serializers import LearnerSerializer, VideoSerializer
 from .serializers import TutorSerializer, UserSerializer
 from .serializers import LogInSerializer, SecondVideoSerializer
 from .serializers import SignUpSerializer, SecondTagSerializer
 from .serializers import RatingSerializer, SecondRatingSerializer
+from .serializers import TagSerializer
 from .authentication import create_access_token
 from .authentication import create_refresh_token
 from django.contrib.auth.hashers import check_password
@@ -133,7 +134,7 @@ class UserRating(APIView):
         try:
             rating = Rating.objects.get(learner=learner, tutor=tutor)
         except Rating.DoesNotExist:
-            Rating.objects.create(learner=learner, tutor=tutor, star=star, review=review)
+            rating = Rating.objects.create(learner=learner, tutor=tutor, star=star, review=review)
         else:
            rating.star = star
            rating.review = review
