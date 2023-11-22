@@ -5,7 +5,6 @@ from .models import User, Learner, Tutor, Rating, Video, Tag
 from django.contrib.auth.hashers import make_password
 
 LETTERS = set(string.ascii_letters)
-SCORE = {float(n) for n in range(1, 6)}
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -103,9 +102,6 @@ class RatingSerializer(serializers.ModelSerializer):
         
     def validate(self, data):
         right_format = set(data.keys()) == set(self.Meta.fields)
-        
-        if data['star'] not in SCORE:
-            raise ValidationError("Wrong Score")
         
         if not right_format:
             raise ValidationError("Wrong JSON data format")
