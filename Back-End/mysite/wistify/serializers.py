@@ -4,10 +4,12 @@ from rest_framework.exceptions import ValidationError
 from .models import User, Learner, Tutor, Rating, Video, Tag
 from django.contrib.auth.hashers import make_password
 
+# Get a set that contains all the uppercase and lowercase English
 LETTERS = set(string.ascii_letters)
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """Convert all the User fields into the JSON format. """
     
     class Meta:
         model = User
@@ -20,6 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'description']
         
 class SignUpSerializer(serializers.ModelSerializer):
+    """The collection of the sign Up essential data. """
     
     class Meta:
         model = User
@@ -35,6 +38,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         data['first_name'] = data['first_name'].strip().title()
         data['last_name'] = data['last_name'].strip().title()
         
+        # New created user needs to follow the naming rules.
         if not right_format:
             raise ValidationError("Wrong JSON data format")
         if not set(data['first_name']).issubset(LETTERS):
@@ -60,6 +64,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         
          
 class LearnerSerializer(serializers.ModelSerializer):
+    """Convert all the learner fields into JSON format. """
     user = UserSerializer()
     
     class Meta:
@@ -67,6 +72,7 @@ class LearnerSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class TutorSerializer(serializers.ModelSerializer):
+    """Convert all the tutor fields into the JSON format. """
     user = UserSerializer()
     
     class Meta:
@@ -75,6 +81,7 @@ class TutorSerializer(serializers.ModelSerializer):
   
         
 class LogInSerializer(serializers.ModelSerializer):
+    """Serializer with the email and Password fields as the major fields. """
     email = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
     
@@ -93,6 +100,8 @@ class LogInSerializer(serializers.ModelSerializer):
         return data 
     
 class RatingSerializer(serializers.ModelSerializer):
+    """Receiving the rating data. """
+    # Identifying the learner and tutor can be specified from the primary key or id.
     learner_id = serializers.IntegerField(required=True)
     tutor_id = serializers.IntegerField(required=True)
     
@@ -109,6 +118,7 @@ class RatingSerializer(serializers.ModelSerializer):
         return data
     
 class SecondRatingSerializer(serializers.ModelSerializer):
+    """Responding the Rating data. """
     learner = LearnerSerializer()
     tutor = TutorSerializer()
     
@@ -117,6 +127,7 @@ class SecondRatingSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class VideoSerializer(serializers.ModelSerializer):
+    """Receiving the Video data. """
     tutor_id = serializers.IntegerField(required=True)
     
     class Meta:
@@ -132,6 +143,7 @@ class VideoSerializer(serializers.ModelSerializer):
         return data
         
 class SecondVideoSerializer(serializers.ModelSerializer):
+    """Responding the Video data. """
     tutor = TutorSerializer()
     
     class Meta:
@@ -140,6 +152,7 @@ class SecondVideoSerializer(serializers.ModelSerializer):
         
         
 class TagSerializer(serializers.ModelSerializer):
+    """Receiving the Tag data. """
     tutor_id = serializers.IntegerField(required=True)
     
     class Meta:
@@ -155,6 +168,7 @@ class TagSerializer(serializers.ModelSerializer):
         return data
         
 class SecondTagSerializer(serializers.ModelSerializer):
+    """Responding the Video data. """
     tutor = TutorSerializer()
     
     class Meta:
