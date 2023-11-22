@@ -13,6 +13,7 @@ from .authentication import create_refresh_token
 from django.contrib.auth.hashers import check_password
 
 class GetLearner(APIView):
+    """Get all the learners' data in the application. """
     def get(self, request):
         learner = Learner.objects.all()
         serializer = LearnerSerializer(learner, many=True)
@@ -20,6 +21,7 @@ class GetLearner(APIView):
         return Response(serializer.data)
 
 class GetTutor(APIView):
+    """Get all the tutors' data in the application. """
     def get(self, request):
         tutor = Tutor.objects.all()
         serializer = TutorSerializer(tutor, many=True)
@@ -27,6 +29,7 @@ class GetTutor(APIView):
         return Response(serializer.data)
     
 class GetRating(APIView):
+    """Get all the ratings' data in the application. """
     def get(self, request):
         rating = Rating.objects.all()
         serializer = SecondRatingSerializer(rating, many=True)
@@ -34,6 +37,7 @@ class GetRating(APIView):
         return Response(serializer.data)
 
 class GetTag(APIView):
+    """Get all the tags' data in the application. """
     def get(self, request):
         rating = Tag.objects.all()
         serializer = SecondTagSerializer(rating, many=True)
@@ -41,6 +45,7 @@ class GetTag(APIView):
         return Response(serializer.data)
     
 class GetVideo(APIView):
+    """Get all the videos' data in the application. """
     def get(self, request):
         rating = Video.objects.all()
         serializer = SecondVideoSerializer(rating, many=True)
@@ -48,6 +53,7 @@ class GetVideo(APIView):
         return Response(serializer.data)
     
 class LearnerSignUp(APIView):
+    """Sign up and save learners' data. """
     def post(self, request):
         user_serializer = SignUpSerializer(data=request.data)
         user_serializer.is_valid(raise_exception=True)
@@ -61,6 +67,7 @@ class LearnerSignUp(APIView):
         return Response(learner_seriailizer.data)
     
 class TutorSignUp(APIView):
+    """Sign up and save tutors' data. """
     def post(self, request):
         user_serializer = SignUpSerializer(data=request.data)
         user_serializer.is_valid(raise_exception=True)
@@ -75,6 +82,10 @@ class TutorSignUp(APIView):
 
     
 class LogIn(APIView):
+    """
+       Implementing the logging in for all the users 
+       without role specification. 
+    """
     def post(self, request): 
         login_serializer = LogInSerializer(data=request.data)
         login_serializer.is_valid(raise_exception=True)
@@ -90,6 +101,7 @@ class LogIn(APIView):
         except Learner.DoesNotExist:
             
             try:
+                # Check whether the user data belongs to the Tutor or not
                 tutor = Tutor.objects.get(user__email=email)
                 is_learner = False
                 
@@ -101,7 +113,8 @@ class LogIn(APIView):
 
         if not correct_password:
             raise APIException('Incorrect Email or Password')
-            
+        
+        # Generating Token session    
         access_token = create_access_token(user.id)
         refresh_token = create_refresh_token(user.id)
         
@@ -117,6 +130,7 @@ class LogIn(APIView):
     
 
 class UserRating(APIView):
+    """Save and response the user's rating. """
     def post(self, request):
         rating_serializer = RatingSerializer(data=request.data)
         rating_serializer.is_valid(raise_exception=True)
@@ -136,6 +150,8 @@ class UserRating(APIView):
         except Rating.DoesNotExist:
             rating = Rating.objects.create(learner=learner, tutor=tutor, star=star, review=review)
         else:
+           # This case means that the learner redo the same tutor rating again.
+           # So, this will update the rating stars or rating review to the latest version.
            rating.star = star
            rating.review = review
            rating.save()
@@ -146,6 +162,7 @@ class UserRating(APIView):
         return Response(second_rating.data)
     
 class AddVideo(APIView):
+    """Save and response the uploaded video from tutor. """
     def post(self, request):
         video_serializer = VideoSerializer(data=request.data)
         video_serializer.is_valid(raise_exception=True)
@@ -165,6 +182,7 @@ class AddVideo(APIView):
         return Response(video.data) 
     
 class AddTag(APIView):
+    """Save and response the tutor's tag. """
     def post(self, request):
         tag_serializer = TagSerializer(data=request.data)
         tag_serializer.is_valid(raise_exception=True)
