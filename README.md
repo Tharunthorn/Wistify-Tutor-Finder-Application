@@ -7,7 +7,7 @@ This app was created as part of the Individual Software Process course at Kasets
 
 ## Install and Run
 
-Check * [Coding Guide](https://github.com/Tharunthorn/Wistify-Tutor-Finder-Application/wiki/Coding-Guide) for the information! 
+Check [User Guide](https://github.com/Tharunthorn/Wistify-Tutor-Finder-Application/wiki/User-Guide) from the GitHub Wiki for the information! 
 
 ## Project Documents
 
