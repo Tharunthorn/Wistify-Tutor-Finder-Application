@@ -1,0 +1,135 @@
+{% extends "main/header.html" %}
+{% block content %}
+    <!-- Search Bar -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+
+        <!-- Suggestion Checkboxes -->
+        <div class="mt-3">
+            {% for subject_key, subject_label in subject_choices %}
+                <label class="checkbox-label">
+                    <input type="checkbox" class="form-check-input suggestion-checkbox" value="{{ subject_key }}"> {{ subject_label }}
+                </label>
+            {% endfor %}
+        </div>
+
+        </div>
+    </div>
+
+    <!-- Display Results -->
+    <div class="row display-flex justify-content-start" id="searchResults">
+        {% for object in objects %}
+            <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">
+                <article class="media content-section customhover" style="height: 95%;">
+                    <!-- Your existing code for displaying individual objects goes here -->
+                    <div class="media-body">
+                        <a class="mr-2" href="{% url 'profile' object.author %}">{{ object.author }}</a>
+                        <small class="text-muted">{{ object.published|date:"F d, Y" }}</small>
+                    </div>
+                    <div>
+                        <a class="article-title line-clamp-2 title-style" style="font-size: 22px" href="/{{object.slug}}">
+                            {{ object.title }}
+                        </a>
+                        <a href="/{{object.slug}}" style="text-decoration: none;">
+                            <p class="article-content line-clamp-5 subtitle-style">{{ object.subtitle }}</p>
+                        </a>
+                        <p class="article-content line-clamp-5 subtitle-style">Subjects: {{ object.subjects }}</p>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+
+ <script>
+    // Instant Search Functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var searchValue = this.value.toLowerCase();
+        var resultsContainer = document.getElementById('searchResults');
+        resultsContainer.innerHTML = '';
+
+        {% for object in objects %}
+            // Check if the object matches the search criteria
+            var title = "{{ object.title|lower }}";
+            var subtitle = "{{ object.subtitle|lower }}";
+            var subject = "{{ object.subjects }}"
+            if (title.includes(searchValue) || subtitle.includes(searchValue) || subject.includes(searchValue)) {
+                // Your existing code for displaying individual objects goes here
+                resultsContainer.innerHTML += `
+                    <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">
+                        <article class="media content-section customhover" style="height: 95%;">
+                            <!-- Your existing code for displaying individual objects goes here -->
+                            <div class="media-body">
+                                <a class="mr-2" href="{% url 'profile' object.author %}">{{ object.author }}</a>
+                                <small class="text-muted">{{ object.published|date:"F d, Y" }}</small>
+                            </div>
+                            <div>
+                                <a class="article-title line-clamp-2 title-style" style="font-size: 22px" href="/{{object.slug}}">
+                                    {{ object.title }}
+                                </a>
+                                <a href="/{{object.slug}}" style="text-decoration: none;">
+                                    <p class="article-content line-clamp-5 subtitle-style">{{ object.subtitle }}</p>
+                                </a>
+                                <p class="article-content line-clamp-5 subtitle-style">Subjects: {{ object.subjects }}</p>
+                            </div>
+                        </article>
+                    </div>
+                `;
+            }
+        {% endfor %}
+    });
+
+    // Handle checkbox changes
+    var checkboxes = document.querySelectorAll('.suggestion-checkbox');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            updateSearch();
+        });
+    });
+
+    // Function to update the search based on selected checkboxes
+    function updateSearch() {
+        var selectedSubjects = [];
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedSubjects.push(checkbox.value);
+            }
+        });
+
+        // Perform the search using selectedSubjects (you can customize this part)
+        var resultsContainer = document.getElementById('searchResults');
+        resultsContainer.innerHTML = '';
+
+        {% for object in objects %}
+            var subject = "{{ object.subjects }}";
+            if (selectedSubjects.every(function(selectedSubject) { return subject.includes(selectedSubject); })) {
+                // Your existing code for displaying individual objects goes here
+                resultsContainer.innerHTML += `
+                    <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">
+                        <article class="media content-section customhover" style="height: 95%;">
+                            <!-- Your existing code for displaying individual objects goes here -->
+                            <div class="media-body">
+                                <a class="mr-2" href="{% url 'profile' object.author %}">{{ object.author }}</a>
+                                <small class="text-muted">{{ object.published|date:"F d, Y" }}</small>
+                            </div>
+                            <div>
+                                <a class="article-title line-clamp-2 title-style" style="font-size: 22px" href="/{{object.slug}}">
+                                    {{ object.title }}
+                                </a>
+                                <a href="/{{object.slug}}" style="text-decoration: none;">
+                                    <p class="article-content line-clamp-5 subtitle-style">{{ object.subtitle }}</p>
+                                </a>
+                                <p class="article-content line-clamp-5 subtitle-style">Subjects: {{ object.subjects }}</p>
+                            </div>
+                        </article>
+                    </div>
+                `;
+            }
+        {% endfor %}
+    }
+</script>
+
+
+
+
+{% endblock content %}

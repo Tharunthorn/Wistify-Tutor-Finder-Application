@@ -1,0 +1,65 @@
+{% extends "main/header.html" %}
+{% block content %}
+<div class="row media content-section mobiledevice">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-flex">
+            <div>
+                <h1 class="title-style">{{ object.title }}</h1>
+                <h2 class="subtitle-style">{{ object.subtitle }}</h2>
+            </div>
+        </div>
+        <div class="d-flex article-metadata">
+            <div>
+                <a class='mr-2' href="{% url 'profile' object.author %}">{{ object.author }}</a>
+                <small class="text-muted">Published {{ object.published|date:"F d, Y" }}</small>
+            </div>
+            {% if object.author == user or user.is_superuser %}
+                <div class="ml-auto">
+                    <a class="btn btncolor btn-sm mt-1 mb-1" href="{% url 'article_update' object.series.slug object.article_slug %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'article_delete' object.series.slug object.article_slug  %}">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-lg-9 col-md-12 col-sm-12" id="content">
+        <div class="article-style">
+            {{ object.content|safe }}
+        </div>
+    </div>
+    <!-- Display total rating -->
+    <p>Total Rating: {{ object.total_rating }}</p>
+
+    <!-- Comment form -->
+    {% if user.is_authenticated %}
+    <h3>Leave a Comment</h3>
+    <form method="post" action="{% url 'article' series=object.series.slug article=object.article_slug %}">
+        {% csrf_token %}
+        {{ comment_form.content }}
+        <select name="rating">
+            <option value="0" selected>Rating: 0.0</option>
+            <option value="0.5">Rating: 0.5</option>
+             <option value="1">Rating: 1.0</option>
+            <option value="1.5">Rating: 1.5</option>
+            <option value="2">Rating: 2.0</option>
+            <option value="2.5">Rating: 2.5</option>
+            <option value="3">Rating: 3.0</option>
+            <option value="3.5">Rating: 3.5</option>
+            <option value="4">Rating: 4.0</option>
+            <option value="4.5">Rating: 4.5</option>
+            <option value="5">Rating: 5.0</option>
+        </select>
+        <button type="submit">Submit Comment</button>
+    </form>
+    {% endif %}
+
+    <!-- Display comments -->
+    <h3>Comments</h3>
+    {% for comment in object.comments.all %}
+        <div>
+            <h5>{{ comment.user }}</h5>
+            <p>{{ comment.content }}</p>
+            <p>Rating: {{ comment.rating }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
