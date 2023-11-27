@@ -3,27 +3,16 @@
 
 Wistify is a tutoring platform where learners can connect with tutors in subjects of their interest.
 
-This app was created as part of the [Individual Software Process](
-https://cpske.github.io/ISP) course at Kasetsart University.
+This app was created as part of the Individual Software Process course at Kasetsart University.
 
 ## Install and Run
 
-- TBA
-
-## User Demo
-
-| Username  | Password        |
-|-----------|-----------------|
-|      |  |
+Check * [Coding Guide](https://github.com/Tharunthorn/Wistify-Tutor-Finder-Application/wiki/Coding-Guide) for the information! 
 
 ## Project Documents
 
-Check out all of our project documents [here!](../../wiki/Home)
+Check out all of our project documents [here!](../../wiki/Home)!
 
-- [Vision Statement](../../wiki/Vision%20Statement)
-- [Requirements](../../wiki/Requirements)
-- [Development Plan](../../wiki/Development-Plan)
-- [Task Board](https://github.com/users/Tharunthorn/projects/6)
-- [Retrospectives](../../wiki/Retrospectives)
+  
 
 
