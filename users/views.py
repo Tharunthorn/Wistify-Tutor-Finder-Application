@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserLoginForm, UserUpdateForm
 from .decorators import user_not_authenticated
+from main.models import ArticleSeries
 
 # Create your views here.
 @user_not_authenticated
@@ -75,10 +76,11 @@ def profile(request, username):
             messages.error(request, error)
 
     user = get_user_model().objects.filter(username=username).first()
+    related_series = ArticleSeries.objects.filter(author=user)
     if user:
         form = UserUpdateForm(instance=user)
         form.fields['description'].widget.attrs = {'rows': 1}
-        return render(request, 'users/profile.html', context={'form': form})
+        return render(request, 'users/profile.html', context={'form': form, 'related_series': related_series})
 
     return redirect("/")
 

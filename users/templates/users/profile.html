@@ -29,6 +29,15 @@
                 </p>
                 <p class="text-secondary">{{ form.instance.description }}</p>
             </div>
+             <!-- Display related article series -->
+            {% if related_series %}
+                <h3>Related Article Series:</h3>
+                <ul>
+                    {% for series in related_series %}
+                        <li><a href="/{{series.slug}}">{{ series.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
         {% if user.username == form.instance.username %}

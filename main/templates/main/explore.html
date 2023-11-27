@@ -52,8 +52,9 @@
             // Check if the object matches the search criteria
             var title = "{{ object.title|lower }}";
             var subtitle = "{{ object.subtitle|lower }}";
-            var subject = "{{ object.subjects }}"
-            if (title.includes(searchValue) || subtitle.includes(searchValue) || subject.includes(searchValue)) {
+            var subject = "{{ object.subjects|lower }}"
+            var author =  "{{ object.author|lower }}"
+            if (title.includes(searchValue) || subtitle.includes(searchValue) || subject.includes(searchValue) || author.includes(searchValue)) {
                 // Your existing code for displaying individual objects goes here
                 resultsContainer.innerHTML += `
                     <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">

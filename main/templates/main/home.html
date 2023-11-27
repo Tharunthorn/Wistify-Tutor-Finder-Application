@@ -1,6 +1,17 @@
 {% extends "main/header.html" %}
 {% block content %}
-    {% if user.is_authenticated %}
+    {% if not user.is_authenticated %}
+         <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1>Welcome To Wistify</h1>
+                <p>Discover. Connect. Excel. Where Tutors Shine, Learners Thrive!</p>
+                <a href="{% url 'register' %}" class="btn btn-primary">Join Us</a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    {% endif %}
     <div class="row display-flex justify-content-start">
     {% for object in objects %}
         <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">
@@ -35,21 +46,13 @@
                         {% if object.subjects %}
                         <p class="article-content line-clamp-5 subtitle-style">Subjects: {{ object.subjects }}</p>
                         {% endif %}
+                        {% if object.total_rating != none %}
+                        <p class="article-content line-clamp-5 subtitle-style">Rating: {{ object.total_rating }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </article>
         </div>
     {% endfor %}
     </div>
-    {% else %}
-         <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-6">
-                <h1>Welcome To Wistify</h1>
-                <p>Discover. Connect. Excel. Where Tutors Shine, Learners Thrive!</p>
-                <a href="{% url 'register' %}" class="btn btn-primary">Join Us</a>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 {% endblock content %}

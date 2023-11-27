@@ -3,5 +3,7 @@ django-tinymce
 fontawesomefree
 django-crispy-forms
 crispy-bootstrap4
+django-bootstrap-v5
+django-allauth
 pillow
 six
