@@ -10,7 +10,7 @@ Check [User Guide](https://github.com/Tharunthorn/Wistify-Tutor-Finder-Applicati
 
 ## Project Documents
 
-Check out all of our project documents [here!](../../wiki/Home)!
+Check out all of our project documents [here!](../../wiki/Home)
 
   
 
